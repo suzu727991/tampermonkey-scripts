@@ -1,15 +1,19 @@
 // ==UserScript==
 // @name         セラーセントラル共有メモ
 // @namespace    http://tampermonkey.net/
-// @version      2.0
+// @version      2.1
 // @description  Googleスプレッドシートと同期するメモ欄
 // @match        https://sellercentral.amazon.co.jp/*
+// @updateURL    https://github.com/suzu727991/tampermonkey-scripts/raw/refs/heads/main/%E3%82%BB%E3%83%A9%E3%83%BC%E3%82%BB%E3%83%B3%E3%83%88%E3%83%A9%E3%83%AB%E5%85%B1%E6%9C%89%E3%83%A1%E3%83%A2.user.js
+// @downloadURL  https://github.com/suzu727991/tampermonkey-scripts/raw/refs/heads/main/%E3%82%BB%E3%83%A9%E3%83%BC%E3%82%BB%E3%83%B3%E3%83%88%E3%83%A9%E3%83%AB%E5%85%B1%E6%9C%89%E3%83%A1%E3%83%A2.user.js
+// @grant        none
 // ==/UserScript==
 
 (function() {
     'use strict';
 
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbyXxhchp6D9QBqvnEA5I2phRJeRvX4VXto5ncC3C1jfFywVCVAeljHlpuABOcrXITGz/exec"; // ←ここを差し替え
+    // このURLはチームで共通のものを使用してください
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbyXxhchp6D9QBqvnEA5I2phRJeRvX4VXto5ncC3C1jfFywVCVAeljHlpuABOcrXITGz/exec";
 
     window.addEventListener("load", async () => {
         // コンテナ
@@ -53,11 +57,18 @@
         }
 
         // 入力時に保存
+        let saveTimer;
         memoBox.addEventListener('input', () => {
-            fetch(GAS_URL, {
-                method: "POST",
-                body: JSON.stringify({memo: memoBox.value})
-            });
+            clearTimeout(saveTimer);
+            saveTimer = setTimeout(() => {
+                fetch(GAS_URL, {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'text/plain', // GAS側で正しく受け取るために修正
+                    },
+                    body: JSON.stringify({memo: memoBox.value})
+                });
+            }, 500); // 500ミリ秒ごとに入力をまとめて送信
         });
 
         // ドラッグ処理
@@ -82,4 +93,5 @@
         document.body.appendChild(memoContainer);
     });
 })();
+
 
