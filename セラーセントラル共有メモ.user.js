@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         セラーセントラル共有メモ
 // @namespace    http://tampermonkey.net/
-// @version      2.1
+// @version      2.2
 // @description  Googleスプレッドシートと同期するメモ欄
 // @match        https://sellercentral.amazon.co.jp/*
 // @updateURL    https://github.com/suzu727991/tampermonkey-scripts/raw/refs/heads/main/%E3%82%BB%E3%83%A9%E3%83%BC%E3%82%BB%E3%83%B3%E3%83%88%E3%83%A9%E3%83%AB%E5%85%B1%E6%9C%89%E3%83%A1%E3%83%A2.user.js
@@ -13,7 +13,7 @@
     'use strict';
 
     // このURLはチームで共通のものを使用してください
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbyXxhchp6D9QBqvnEA5I2phRJeRvX4VXto5ncC3C1jfFywVCVAeljHlpuABOcrXITGz/exec";
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbyYMh8s_vL9Baedyf2QbCHj51Md9kCbZ3sQqiYCgF00VcqGDLMl4arO2CViF4af-mjm/exec";
 
     window.addEventListener("load", async () => {
         // コンテナ
